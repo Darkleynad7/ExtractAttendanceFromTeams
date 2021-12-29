@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+            prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.ubb.en.attendaceapp.controller.TeamViewController">
+   <Button fx:id="SelectTeamButton" layoutX="406.0" layoutY="54.0" mnemonicParsing="false" prefHeight="43.0"
+           prefWidth="137.0" text="SELECT TEAM"/>
+   <TitledPane fx:id="TeamsPanel" layoutX="14.0" layoutY="14.0" prefHeight="370.0" prefWidth="323.0" text="TEAMS">
+      <ListView fx:id="TeamsListView" prefHeight="200.0" prefWidth="200.0"/>
+   </TitledPane>
+</AnchorPane>
