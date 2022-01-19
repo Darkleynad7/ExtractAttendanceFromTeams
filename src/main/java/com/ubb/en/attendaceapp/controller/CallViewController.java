@@ -1,13 +1,11 @@
 package com.ubb.en.attendaceapp.controller;
 
 import com.ubb.en.attendaceapp.AttendanceApplication;
+import com.ubb.en.attendaceapp.model.Call;
 import com.ubb.en.attendaceapp.model.Team;
-import com.ubb.en.attendaceapp.repository.TeamRepository;
-import com.ubb.en.attendaceapp.service.TeamService;
+import com.ubb.en.attendaceapp.model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -21,33 +19,50 @@ import javafx.util.Callback;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
+import java.util.Comparator;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
-public class TeamViewController implements Initializable {
+public class CallViewController implements Initializable {
+    @FXML
+    ListView<Call> callView;
 
     @FXML
-    public ListView<Team> TeamsListView;
+    ListView<User> adminView;
 
     @FXML
-    private Button SelectTeamButton;
+    Button openCallView;
 
+    @FXML
+    Button extractAttendance;
+
+    @FXML
+    Button openFile;
+
+    private final Team team;
+
+    public CallViewController(Team team) {
+        this.team = team;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        TeamRepository teamRepository = new TeamRepository();
-        TeamService teamService = new TeamService(teamRepository);
-        ObservableList<Team> teams = FXCollections.observableArrayList();
+        ObservableList<Call> calls = FXCollections.observableArrayList();
+        calls.addAll(team.getCallHistory().stream().sorted(Comparator.comparingLong(t -> t.getDate().getTime())).collect(Collectors.toList()));
+        callView.setItems(calls);
+        callView.getSelectionModel().selectFirst();
 
-        teams.addAll(teamService.getAll());
-        TeamsListView.setItems(teams);
-        TeamsListView.getSelectionModel().selectFirst();
+        ObservableList<User> admins = FXCollections.observableArrayList();
+        admins.addAll(team.getAdmins());
+        adminView.setItems(admins);
+        adminView.getSelectionModel().selectFirst();
 
-        SelectTeamButton.setOnAction(event -> {
+        openCallView.setOnAction(event -> {
             Stage stage = new Stage();
             Parent programRoot;
             Callback<Class<?>, Object> controllerFactory = type -> {
-                if(type == CallViewController.class){
-                    return new CallViewController(TeamsListView.getSelectionModel().getSelectedItem());
+                if(type == UsersViewController.class){
+                    return new UsersViewController(callView.getSelectionModel().getSelectedItem());
                 }
                 else {
                     try {
@@ -59,11 +74,11 @@ public class TeamViewController implements Initializable {
             };
 
             try {
-                FXMLLoader loader = new FXMLLoader(AttendanceApplication.class.getResource("call-view.fxml"));
+                FXMLLoader loader = new FXMLLoader(AttendanceApplication.class.getResource("users-view.fxml"));
                 loader.setControllerFactory(controllerFactory);
                 programRoot = loader.load();
                 Scene callScene = new Scene(programRoot);
-                stage.setTitle("Call History for Team");
+                stage.setTitle("Users connected to call");
                 stage.setScene(callScene);
                 stage.show();
             } catch (IOException e) {

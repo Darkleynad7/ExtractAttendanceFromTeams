@@ -12,7 +12,7 @@ public class AttendanceApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(AttendanceApplication.class.getResource("team-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
-        stage.setTitle("Hello!");
+        stage.setTitle("Teams Attendance");
         stage.setScene(scene);
         stage.show();
     }

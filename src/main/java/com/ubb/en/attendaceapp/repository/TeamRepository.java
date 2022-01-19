@@ -9,7 +9,7 @@ import com.ubb.en.attendaceapp.utils.HardcodeResources;
 import java.util.List;
 
 public class TeamRepository {
-    private List<Team> teams;
+    private final List<Team> teams;
 
     public TeamRepository(){
         teams = HardcodeResources.hardCodeTeams(10);

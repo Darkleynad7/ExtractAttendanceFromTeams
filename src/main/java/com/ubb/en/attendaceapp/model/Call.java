@@ -1,5 +1,6 @@
 package com.ubb.en.attendaceapp.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -30,5 +31,11 @@ public class Call {
 
     public void setConnectedUsers(List<User> connectedUsers) {
         this.connectedUsers = connectedUsers;
+    }
+
+    @Override
+    public String toString() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy - hh:mm");
+        return name + " --- " + simpleDateFormat.format(date) + " --- " + this.connectedUsers.size() + " members";
     }
 }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+            prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.ubb.en.attendaceapp.controller.CallViewController">
+    <TitledPane animated="false" layoutX="14.0" layoutY="14.0" prefHeight="372.0" prefWidth="270.0" text="Call History">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="346.0" prefWidth="237.0">
+            <ListView fx:id="callView" prefHeight="346.0" prefWidth="270.0"/>
+        </AnchorPane>
+    </TitledPane>
+    <TitledPane animated="false" layoutX="302.0" layoutY="14.0" prefHeight="132.0" prefWidth="287.0" text="Admins">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="74.0" prefWidth="348.0">
+            <ListView fx:id="adminView" layoutY="-1.0" prefHeight="108.0" prefWidth="287.0"/>
+        </AnchorPane>
+    </TitledPane>
+    <Button fx:id="openCallView" layoutX="314.0" layoutY="261.0" mnemonicParsing="false" prefHeight="26.0"
+            prefWidth="262.0" text="Show Users For Call"/>
+    <Button fx:id="extractAttendance" layoutX="314.0" layoutY="305.0" mnemonicParsing="false" prefHeight="26.0"
+            prefWidth="262.0" text="Extract Attendance From Call"/>
+    <Button fx:id="openFile" layoutX="314.0" layoutY="346.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="262.0"
+            text="Open Attendance File"/>
+</AnchorPane>
