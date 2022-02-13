@@ -1,6 +1,8 @@
 module com.ubb.en.attendaceapp {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.datatransfer;
+    requires java.desktop;
 
 
     opens com.ubb.en.attendaceapp to javafx.fxml;

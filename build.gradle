@@ -8,10 +8,11 @@ version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+    google()
 }
 
 ext {
-    junitVersion = '5.7.1'
+    junitVersion = '5.8.2'
 }
 
 sourceCompatibility = '15'

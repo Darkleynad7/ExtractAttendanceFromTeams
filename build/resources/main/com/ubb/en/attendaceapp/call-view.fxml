@@ -6,6 +6,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
             prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.ubb.en.attendaceapp.controller.CallViewController">
@@ -19,6 +21,8 @@
             <ListView fx:id="adminView" layoutY="-1.0" prefHeight="108.0" prefWidth="287.0"/>
         </AnchorPane>
     </TitledPane>
+    <Label layoutX="302.0" layoutY="170.0" text="File Path"/>
+    <TextField fx:id="filePath" layoutX="302.0" layoutY="190.0" prefWidth="287"/>
     <Button fx:id="openCallView" layoutX="314.0" layoutY="261.0" mnemonicParsing="false" prefHeight="26.0"
             prefWidth="262.0" text="Show Users For Call"/>
     <Button fx:id="extractAttendance" layoutX="314.0" layoutY="305.0" mnemonicParsing="false" prefHeight="26.0"

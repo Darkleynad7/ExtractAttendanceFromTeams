@@ -4,6 +4,7 @@ import com.ubb.en.attendaceapp.AttendanceApplication;
 import com.ubb.en.attendaceapp.model.Call;
 import com.ubb.en.attendaceapp.model.Team;
 import com.ubb.en.attendaceapp.model.User;
+import com.ubb.en.attendaceapp.service.AttendanceService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -39,10 +41,16 @@ public class CallViewController implements Initializable {
     @FXML
     Button openFile;
 
+    @FXML
+    TextField filePath;
+
     private final Team team;
+
+    private final AttendanceService attendanceService;
 
     public CallViewController(Team team) {
         this.team = team;
+        attendanceService = new AttendanceService(team.getName() + ".csv", team.getMembers());
     }
 
     @Override
@@ -56,6 +64,17 @@ public class CallViewController implements Initializable {
         admins.addAll(team.getAdmins());
         adminView.setItems(admins);
         adminView.getSelectionModel().selectFirst();
+
+        filePath.setDisable(true);
+        filePath.setText(team.getName() + ".csv");
+
+        openFile.setOnAction(event -> {
+            attendanceService.openFile();
+        });
+
+        extractAttendance.setOnAction(event -> {
+            attendanceService.addDate(callView.getSelectionModel().getSelectedItem().getDate(), callView.getSelectionModel().getSelectedItem().getConnectedUsers());
+        });
 
         openCallView.setOnAction(event -> {
             Stage stage = new Stage();
