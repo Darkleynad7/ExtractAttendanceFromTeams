@@ -5,7 +5,6 @@ import com.ubb.en.attendaceapp.model.Call;
 import com.ubb.en.attendaceapp.model.Team;
 import com.ubb.en.attendaceapp.model.User;
 import com.ubb.en.attendaceapp.service.AttendanceService;
-import com.ubb.en.attendaceapp.service.TeamService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -100,7 +99,7 @@ public class CallViewController implements Initializable {
             Parent programRoot;
             Callback<Class<?>, Object> controllerFactory = type -> {
                 if(type == UsersViewController.class){
-                    return new UsersViewController(callView.getSelectionModel().getSelectedItem());
+                    return new UsersViewController(callView.getSelectionModel().getSelectedItem(), attendanceService);
                 }
                 else {
                     try {

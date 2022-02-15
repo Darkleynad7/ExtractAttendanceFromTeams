@@ -2,8 +2,7 @@ package com.ubb.en.attendaceapp.controller;
 
 import com.ubb.en.attendaceapp.model.Call;
 import com.ubb.en.attendaceapp.model.User;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import com.ubb.en.attendaceapp.service.AttendanceService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,6 +13,10 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class UsersViewController implements Initializable {
@@ -38,8 +41,14 @@ public class UsersViewController implements Initializable {
 
     private final Call call;
 
-    public UsersViewController(Call call) {
+    private final AttendanceService attendanceService;
+
+    private List<Date> dateList;
+
+    public UsersViewController(Call call, AttendanceService attendanceService) {
         this.call = call;
+        this.attendanceService = attendanceService;
+        dateList = attendanceService.getDates();
     }
 
     @Override
@@ -65,6 +74,19 @@ public class UsersViewController implements Initializable {
 
         goBack.setOnAction(event -> {
             ((Stage) goBack.getScene().getWindow()).close();
+        });
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy - hh:mm");
+        try {
+            Date date = simpleDateFormat.parse(simpleDateFormat.format(call.getDate()));
+            extractAttendance.setDisable(dateList.contains(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        extractAttendance.setOnAction(event -> {
+            attendanceService.addDate(call.getDate(), call.getConnectedUsers());
+            dateList = attendanceService.getDates();
         });
     }
 }
