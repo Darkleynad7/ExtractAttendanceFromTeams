@@ -25,4 +25,8 @@ public class AttendanceService {
             e.printStackTrace();
         }
     }
+
+    public List<Date> getDates() {
+        return attendanceRepository.getDates();
+    }
 }

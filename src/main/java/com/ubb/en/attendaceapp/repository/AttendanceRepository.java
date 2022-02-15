@@ -40,9 +40,14 @@ public class AttendanceRepository {
         writeToFile();
     }
 
+    public List<Date> getDates(){
+        readFile();
+        return new ArrayList<>(userForDates.keySet());
+    }
+
     private void writeToFile(){
         File csvOutputFile = new File(this.filePath);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy - hh:mm");
         try (PrintWriter pw = new PrintWriter(csvOutputFile)) {
             pw.print(",");
             pw.print(userForDates.keySet().stream().sorted(Comparator.comparingLong(Date::getTime)).map(simpleDateFormat::format).collect(Collectors.joining(",")));
@@ -65,7 +70,7 @@ public class AttendanceRepository {
 
     private void readFile(){
         File csvInputFile = new File(this.filePath);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy - hh:mm");
         try(Scanner scanner = new Scanner(csvInputFile)){
             if(scanner.hasNextLine()){
                 String dateString = scanner.nextLine();

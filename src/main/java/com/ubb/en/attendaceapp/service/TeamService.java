@@ -16,4 +16,8 @@ public class TeamService {
     public List<Team> getAll(){
         return teamRepository.getAll();
     }
+
+    public void updateTeam(Team team) {
+        teamRepository.updateTeam(team);
+    }
 }

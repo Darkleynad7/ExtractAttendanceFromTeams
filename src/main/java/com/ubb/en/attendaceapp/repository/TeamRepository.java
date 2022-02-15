@@ -21,6 +21,7 @@ public class TeamRepository {
         try {
             PrintWriter printWriter = new PrintWriter(file);
             teams.forEach(t -> printWriter.println(Team.modelToString(t)));
+            printWriter.flush();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -50,5 +51,10 @@ public class TeamRepository {
 
     public List<Team> getAll(){
         return teams;
+    }
+
+    public void updateTeam(Team team) {
+        teams.set(teams.indexOf(team), team);
+        writeToFile("src/main/resources/com/ubb/en/attendaceapp/repo.txt");
     }
 }

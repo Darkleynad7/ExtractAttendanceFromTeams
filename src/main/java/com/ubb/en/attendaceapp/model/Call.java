@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Call {
@@ -33,6 +34,15 @@ public class Call {
 
     public void setConnectedUsers(List<User> connectedUsers) {
         this.connectedUsers = connectedUsers;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Call){
+            Call other = (Call) obj;
+            return Objects.equals(this.name, other.name) && this.date == other.getDate();
+        }
+        return false;
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.ubb.en.attendaceapp.model.Call;
 import com.ubb.en.attendaceapp.model.Team;
 import com.ubb.en.attendaceapp.model.User;
 import com.ubb.en.attendaceapp.service.AttendanceService;
+import com.ubb.en.attendaceapp.service.TeamService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -21,7 +22,11 @@ import javafx.util.Callback;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -48,9 +53,12 @@ public class CallViewController implements Initializable {
 
     private final AttendanceService attendanceService;
 
+    private List<Date> dateList;
+
     public CallViewController(Team team) {
         this.team = team;
         attendanceService = new AttendanceService(team.getName() + ".csv", team.getMembers());
+        dateList = attendanceService.getDates();
     }
 
     @Override
@@ -74,6 +82,17 @@ public class CallViewController implements Initializable {
 
         extractAttendance.setOnAction(event -> {
             attendanceService.addDate(callView.getSelectionModel().getSelectedItem().getDate(), callView.getSelectionModel().getSelectedItem().getConnectedUsers());
+            dateList = attendanceService.getDates();
+        });
+
+        callView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy - hh:mm");
+            try {
+                Date date = simpleDateFormat.parse(simpleDateFormat.format(callView.getSelectionModel().getSelectedItem().getDate()));
+                extractAttendance.setDisable(dateList.contains(date));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         });
 
         openCallView.setOnAction(event -> {

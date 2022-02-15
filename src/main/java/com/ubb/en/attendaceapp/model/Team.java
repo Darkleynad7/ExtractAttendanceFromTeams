@@ -2,6 +2,7 @@ package com.ubb.en.attendaceapp.model;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Team {
@@ -49,6 +50,15 @@ public class Team {
 
     public void setCallHistory(List<Call> callHistory) {
         this.callHistory = callHistory;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Team){
+            Team other = (Team) obj;
+            return Objects.equals(other.ID, this.ID);
+        }
+        return false;
     }
 
     @Override
